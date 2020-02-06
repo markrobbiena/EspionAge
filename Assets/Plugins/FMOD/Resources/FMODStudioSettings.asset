@@ -16,7 +16,11 @@ MonoBehaviour:
   HasSourceProject: 0
   HasPlatforms: 0
   sourceProjectPath: 
+<<<<<<< HEAD
   sourceBankPath: Assets\FMOD\Desktop\Desktop
+=======
+  sourceBankPath: FMOD/Desktop/Desktop
+>>>>>>> master
   SourceBankPathUnformatted: 
   AutomaticEventLoading: 1
   BankLoadType: 0
@@ -24,7 +28,11 @@ MonoBehaviour:
   EncryptionKey: 
   ImportType: 0
   TargetAssetPath: 
+<<<<<<< HEAD
   LoggingLevel: 2
+=======
+  LoggingLevel: 0
+>>>>>>> master
   SpeakerModeSettings:
   - Platform: 2
     Value: 3
@@ -76,6 +84,12 @@ MonoBehaviour:
   Plugins: []
   MasterBanks:
   - Master
+<<<<<<< HEAD
   Banks: []
+=======
+  Banks:
+  - Master.assets
+  - Master.streams
+>>>>>>> master
   BanksToLoad: []
   LiveUpdatePort: 9264
