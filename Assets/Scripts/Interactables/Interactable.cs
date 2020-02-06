@@ -58,7 +58,7 @@ public class Interactable : MonoBehaviour, IInteractable
         if (other.gameObject.layer == LayerMask.NameToLayer(Constants.LAYER_PLAYER) && interactableOn)
         {
             interactableOn = false;
-
+        
             HideInteractUI();
         }
     }
