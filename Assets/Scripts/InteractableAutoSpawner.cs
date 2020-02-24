@@ -13,6 +13,7 @@ public class InteractableAutoSpawner : MonoBehaviour
     public GameObject prefab;
     public int spawnCount = 5;
     [SerializeField] public InteractableType interactableType;
+    public string chuteSFX;
 
     private List<GameObject> currentInteractables;
 
@@ -33,9 +34,10 @@ public class InteractableAutoSpawner : MonoBehaviour
     private GameObject SpawnInteractable()
     {
         GameObject spawnedInteractable = Instantiate(prefab, transform);
+        //FMODUnity.RuntimeManager.PlayOneShot(sfxPath, transform.position); this is for the pill bottle sfx
         spawnedInteractable.transform.localPosition = Vector3.zero;
 
-        switch(interactableType)
+        switch (interactableType)
         {
             case InteractableType.Interactable:
                 {
