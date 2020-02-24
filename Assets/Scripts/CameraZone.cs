@@ -15,6 +15,11 @@ public class CameraZone : MonoBehaviour
     public float disabledFogAlpha = 0f;
     public float fadeSpeed = 0.1f;
 
+    public delegate void EnterAction();
+    public delegate void ExitAction();
+    public event EnterAction OnPlayerEnter;
+    public event ExitAction OnPlayerExit;
+
     private void Start()
     {
         fogs.ForEach(fog =>
@@ -42,6 +47,7 @@ public class CameraZone : MonoBehaviour
             // so if there is no mainCamera set, we will just keep whatever the current camera is (which may not be preferable in most cases)
             if (mainCamera)
             {
+                CameraManager.Instance.OnBlendingComplete += AlertBlendingComplete;
                 CameraManager.Instance.BlendTo(mainCamera);
             }
 
@@ -52,11 +58,19 @@ public class CameraZone : MonoBehaviour
         }
     }
 
+    private void AlertBlendingComplete(CinemachineVirtualCamera fromCamera, CinemachineVirtualCamera toCamera)
+    {
+        CameraManager.Instance.OnBlendingComplete -= AlertBlendingComplete;
+        OnPlayerEnter?.Invoke();
+    }
+
     private void OnTriggerExit(Collider other)
     {
-        if (GameManager.Instance.enableFog)
+        if (other.CompareTag(Constants.TAG_PLAYER))
         {
-            if (other.CompareTag(Constants.TAG_PLAYER))
+            OnPlayerExit?.Invoke();
+
+            if (GameManager.Instance.enableFog)
             {
                 StartCoroutine(FadeFog(disabledFogAlpha, enabledFogAlpha));
             }
