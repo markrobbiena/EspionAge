@@ -15,7 +15,7 @@ public class StaminaBar : MonoBehaviour
     [HideInInspector] 
     public const float STAMINA_MAX = 1f;
 
-    private void Awake() 
+    void Awake() 
     {
         staminaFillImage.fillAmount = 0.0f;
     }

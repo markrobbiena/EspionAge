@@ -7,6 +7,7 @@ using TMPro;
 public class UIManager : Singleton<UIManager>
 {
     public StaminaBar staminaBar;
+    private Image staminaBarImage;
 
     [Header("Fading Settings")]
     public Image fader;
@@ -15,9 +16,12 @@ public class UIManager : Singleton<UIManager>
     public delegate void FadingComplete();
     public event FadingComplete OnFadingComplete;
 
+    
+
     private void Start()
     {
         fader.gameObject.SetActive(true);
+        staminaBarImage = staminaBar.GetComponent<Image>();
     }
 
     private Color GetFaderColorWithAlpha(float alpha)
@@ -60,5 +64,50 @@ public class UIManager : Singleton<UIManager>
     public void InstantFadeOut()
     {
         fader.color = GetFaderColorWithAlpha(1f);
+    }
+
+    //duplicate code to fade stamina bar
+
+
+    private Color SBGetFaderColorWithAlpha(float alpha)
+    {
+        return new Color(staminaBarImage.color.r, staminaBarImage.color.g, staminaBarImage.color.b, alpha);
+    }
+
+    public void SBFadeIn()
+    {
+        // full black --> invisible
+        StartCoroutine(SBFadeCoroutine(1f, 0f));
+    }
+
+    public void SBFadeOut()
+    {
+        // invisible --> full black
+        StartCoroutine(SBFadeCoroutine(0f, 1f));
+    }
+
+    private IEnumerator SBFadeCoroutine(float startAlpha, float endAlpha)
+    {
+        float currentAlpha = startAlpha;
+        while (Mathf.Abs(currentAlpha - startAlpha) < Mathf.Abs(startAlpha - endAlpha))
+        {
+            staminaBarImage.color = SBGetFaderColorWithAlpha(currentAlpha);
+            currentAlpha += fadeSpeed * Time.deltaTime * Mathf.Sign(endAlpha - startAlpha);
+            yield return null;
+        }
+
+        OnFadingComplete?.Invoke();
+
+        yield return null;
+    }
+
+    public void SBInstantFadeIn()
+    {
+        staminaBarImage.color = SBGetFaderColorWithAlpha(0f);
+    }
+
+    public void SBInstantFadeOut()
+    {
+        staminaBarImage.color = SBGetFaderColorWithAlpha(1f);
     }
 }

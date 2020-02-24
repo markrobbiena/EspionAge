@@ -31,10 +31,12 @@ public class CameraZone : MonoBehaviour
             {
                 print("isrestricted");
                 UIManager.Instance.staminaBar.gameObject.SetActive(true);
+                UIManager.Instance.SBFadeIn();
             }
             else
             {
                 print("isunrestricted");
+                UIManager.Instance.SBFadeOut();
                 UIManager.Instance.staminaBar.gameObject.SetActive(false);
             }
             // so if there is no mainCamera set, we will just keep whatever the current camera is (which may not be preferable in most cases)
