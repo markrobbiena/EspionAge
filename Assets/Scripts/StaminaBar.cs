@@ -1,12 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StaminaBar : MonoBehaviour
 {
     public Image staminaFillImage;
+    public Image greyOutlineImage;
+    private Image staminaBarImage;
     public float changePerSecond = 0.1f;
+
+    public delegate void FadingComplete();
+    public event FadingComplete OnFadingComplete;
+    public float fadeSpeed = 2f;
 
     // Events for others to subscribe to OnChange events
     public delegate void ChangedAction(float fillAmount);
@@ -14,6 +21,12 @@ public class StaminaBar : MonoBehaviour
 
     [HideInInspector] 
     public const float STAMINA_MAX = 1f;
+
+    void Start()
+    {
+        staminaBarImage = GetComponent<Image>();
+        print(staminaBarImage);
+    }
 
     private void Awake() 
     {
@@ -69,5 +82,36 @@ public class StaminaBar : MonoBehaviour
         staminaFillImage.fillAmount = newFill;
 
         OnChange?.Invoke(newFill);
+    }
+
+    //Fading in and out
+    public void FadeIn()
+    {
+        // full black --> invisible
+        StartCoroutine(FadeCoroutine(1f, 0f));
+    }
+
+    public void FadeOut()
+    {
+        print("fading out");
+        // invisible --> full black
+        StartCoroutine(FadeCoroutine(0f, 1f));
+    }
+
+    private IEnumerator FadeCoroutine(float startAlpha, float endAlpha)
+    {
+        float currentAlpha = startAlpha;
+        while (Mathf.Abs(currentAlpha - startAlpha) < Mathf.Abs(startAlpha - endAlpha))
+        {
+            staminaFillImage.color = new Color(staminaFillImage.color.r, staminaFillImage.color.g, staminaFillImage.color.b, currentAlpha);
+            staminaBarImage.color = new Color(staminaBarImage.color.r, staminaBarImage.color.g, staminaBarImage.color.b, currentAlpha);
+            greyOutlineImage.color = new Color(greyOutlineImage.color.r, greyOutlineImage.color.g, greyOutlineImage.color.b, currentAlpha);
+            currentAlpha += fadeSpeed * Time.deltaTime * Mathf.Sign(endAlpha - startAlpha);
+            yield return null;
+        }
+
+        OnFadingComplete?.Invoke();
+
+        yield return null;
     }
 }
