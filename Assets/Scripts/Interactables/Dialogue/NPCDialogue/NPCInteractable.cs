@@ -17,12 +17,13 @@ public class NPCMissionConvos
 
 public class NPCInteractable : DialogueInteractable
 {
+    public float boundaryRadius = Constants.INTERACT_BOUNDARY_RADIUS;
+
     public List<Conversation> defaultConvos;
 
     public List<NPCMissionConvos> missionsOffered;
     private NPCMissionConvos currentMissionConvos = null;            // Current Mission given by this NPC (should only be 1 per NPC)
     private AMission startedMission;                                 // started mission needed to end mission
-
 
     protected NavMeshAgent agent;
     protected GameObject targetObject;
@@ -41,7 +42,7 @@ public class NPCInteractable : DialogueInteractable
 
     protected override void Update()
     {
-        if(IsWithinBoundaryRadius(GameManager.Instance.GetPlayerTransform()))
+        if(IsWithinRadius(originPosition, GameManager.Instance.GetPlayerTransform(), boundaryRadius))
         {
             // Prevent loading during a conversation
             if (!isConversing && !autoPlaying)
@@ -162,14 +163,6 @@ public class NPCInteractable : DialogueInteractable
         base.OnInteract();
     }
 
-    protected override void OnTriggerEnter(Collider other)
-    {
-        if (!autoPlaying)
-        {
-            base.OnTriggerEnter(other);
-        }
-    }
-
     protected override void OnAutoplayComplete()
     {
         base.OnAutoplayComplete();
@@ -204,11 +197,6 @@ public class NPCInteractable : DialogueInteractable
         {
             agent.SetDestination(targetObject.transform.position);
         }
-    }
-
-    private bool IsWithinBoundaryRadius(Transform targetTransform)
-    {
-        return Vector3.Distance(originPosition, targetTransform.position) < Constants.INTERACT_BOUNDARY_RADIUS;
     }
 
     public void SetOriginPosition(Vector3 position)
@@ -258,5 +246,13 @@ public class NPCInteractable : DialogueInteractable
         Quaternion rotation = Quaternion.LookRotation(dirToFace);
 
         StartCoroutine(RotateAnimation(gameObject, rotation, player.GetComponent<PlayerController>().turnSpeed));
+    }
+
+
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, boundaryRadius);
     }
 }
