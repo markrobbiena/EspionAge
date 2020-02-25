@@ -11,7 +11,11 @@ GameObject:
   - component: {fileID: 2216760764327083575}
   - component: {fileID: 8997504381030658057}
   - component: {fileID: 4825604065875176947}
+<<<<<<< Updated upstream
   - component: {fileID: 3305011729512585736}
+=======
+  - component: {fileID: 2847781683738315064}
+>>>>>>> Stashed changes
   m_Layer: 10
   m_Name: Fridge
   m_TagString: Untagged
@@ -86,7 +90,11 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+<<<<<<< Updated upstream
 --- !u!114 &3305011729512585736
+=======
+--- !u!114 &2847781683738315064
+>>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,8 +115,13 @@ MonoBehaviour:
   Preload: 0
   Params: []
   OverrideAttenuation: 1
+<<<<<<< Updated upstream
   OverrideMinDistance: 10
   OverrideMaxDistance: 40
+=======
+  OverrideMinDistance: 9.6465645
+  OverrideMaxDistance: 26.343132
+>>>>>>> Stashed changes
 --- !u!65 &2216760765160482215
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -122,6 +135,29 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.4978476, y: 10.862267, z: 7}
   m_Center: {x: -0.20107603, y: 5.4311333, z: 0}
+--- !u!114 &4594856861845056589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7918006808426757291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/SFX/Fridge Hum
+  PlayEvent: 1
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 25
+  OverrideMaxDistance: 96.91732
 --- !u!1001 &2216760765160482210
 PrefabInstance:
   m_ObjectHideFlags: 0

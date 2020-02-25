@@ -51,7 +51,6 @@ public class InteractableAutoSpawner : MonoBehaviour
                 Debug.LogError($"Unknown InteractableType: {interactableType}");
                 break;
         }
-
         return spawnedInteractable;
     }
 

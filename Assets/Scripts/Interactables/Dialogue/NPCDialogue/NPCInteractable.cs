@@ -12,6 +12,7 @@ public class NPCMissionConvos
     public Conversation beforeConvo;
     public Conversation duringConvo;
     public Conversation afterConvo;
+    public string fmodPath;
 }
 
 public class NPCInteractable : DialogueInteractable
